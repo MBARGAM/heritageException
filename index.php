@@ -6,6 +6,7 @@
  use Isl\Heritage\classes\Enseignant;
  use Isl\Heritage\classes\Personne ;
 use Isl\Heritage\manager\EtudiantManager;
+use Isl\Heritage\manager\EnseignantManager;
 
  $connexion = new PDO('mysql:host=localhost;dbname=webDev3','root','root');
 
@@ -21,11 +22,15 @@ use Isl\Heritage\manager\EtudiantManager;
  print_q($etudiant);
  print_q($enseignant);*/
 
-   $newSetEtudiant = new EtudiantManager($connexion);
+   $newSetEtudiant = new EtudiantManager(1,$connexion);//instanciation du manager des etudiants
+   $newSetEnseignant = new EnseignantManager(1,$connexion);//instanciation du manager des enseignants
 
-   $tableEtudiants = $newSetEtudiant->createEtudiant(5,4);
-
+   $tableEtudiants = $newSetEtudiant->createEtudiant(2);//table contenant des objets etudiants
+   $tableEnseignant= $newSetEnseignant->createEnseignant(2);//table contenant des objets enseignants
+  
    print_q($tableEtudiants);
+
+   print_q($tableEnseignant);
 
    
 ?>

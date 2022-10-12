@@ -4,12 +4,14 @@
      use Isl\Heritage\classes\Etudiant;
      use PDO;
      use Faker\Factory ;
+   
 
      class EtudiantManager extends PersonneManager{
            private $nbreEleves ;
 
-           public function __construct($nbreEleves){
+           public function __construct($nbreEleves,$connexion){
                $this->nbreEleves = $nbreEleves ;
+               parent::__construct($connexion);
            }
 
             public function getEleves(){
@@ -21,10 +23,10 @@
                 }
             }
 
-            public function createEtudiant($nbreEleves,$nbreCoursSuivis){
+            public function createEtudiant($nbreCoursSuivis){
 
                 $faker = Factory::create();
-                $tableauParent = parent::createPersonne($nbreEleves);  // appel de la methode parent create personne     
+                $tableauParent = parent::createPersonne($this->nbreEleves);  // appel de la methode parent create personne     
                 
                 // boucle afin de creer un tableau d objet etudiants 
                  $tableauEtudiants=[];
@@ -32,11 +34,11 @@
                  /*boucle qui permet de creer un tableau de cours ,parcours un tableau du nbre d eleves 
                  a creer et de creation de l objet eleve */
 
-                for($i = 0 ; $i< $nbreEleves ;$i++){
+                for($i = 0 ; $i< $this->nbreEleves ;$i++){
                     $data= [];
                     $data["coursSuivis"]= parent::createCours($nbreCoursSuivis); // creation des cours a travers la methode parent
-                    $data["niveau"] = $faker->citySuffix();
-                    $data["dateInscription"] =$faker->date();
+                    $data["niveau"] = $faker->buildingNumber();
+                    $data["dateInscription"] =$faker->dateTime();
                     $data["infoPerso"] = $tableauParent[$i];
 
                     $newEtudiant = new Etudiant($data);

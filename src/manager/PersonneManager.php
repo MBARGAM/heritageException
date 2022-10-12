@@ -45,7 +45,7 @@
             $faker = Factory::create();
             $data= [];
                 for($i = 0 ; $i< $nbre ;$i++){
-                    $data[] = $faker->name();
+                    $data[] = $faker->jobTitle();
                 }
     
              return $data ;
