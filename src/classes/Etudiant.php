@@ -8,12 +8,17 @@
     private $coursSuivis;
     private $niveau;
     private $dateInscription;
+    private $statut = "eleve";  
+    
+
+    
 
     public function __construct($data){
         
         $this->coursSuivis = isset($data["coursSuivis"])?$data["coursSuivis"]:null;
         $this->niveau =isset($data["niveau"])?$data["niveau"]:null;
         $this->dateInscription =isset($data["dateInscription"])?$data["dateInscription"]:null;
+        //$this->statut ="eleve";
         parent::__construct($data["infoPerso"]); // appel du constructeur de la classe data
 
     }
@@ -28,6 +33,7 @@
         $this->niveau = $niveau;
 
     }
+  
 
     public function setDateInscription($dateInscription){
 
@@ -52,6 +58,12 @@
         return  $this->dateInscription ;
 
     }
+    public function getStatut(){
+
+        return $this->statut;
+
+    }
+    
 
 
   }

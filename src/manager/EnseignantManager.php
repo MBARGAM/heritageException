@@ -37,7 +37,7 @@
                 for($i = 0 ; $i< self::$nbreEnseignants ;$i++){
                     $data= [];
                     $data["coursDispenses"]= parent::createCours($nbreCoursDispenses); // creation des cours a travers la methode parent
-                    $data["dateEntree"] = $faker->dateTime();
+                    $data["dateEntree"] = $faker->date();
                     $data["anciennete"] =$faker->randomDigitNotNull();
                     $data["infoPerso"] = $tableauParent[$i];
 
@@ -48,6 +48,51 @@
                   return   $tableauEnseignants;  // tableau d objets  
 
             }
+
+           
+
+            public  function  create(Enseignant $enseignant){
+                 /*insertion des  valeurs generales  dans la table elevesEnseignant
+                et on termine  avec l insertion via la table cours*/
+             
+             
+                $req = $this->connexion 
+                ->prepare("INSERT INTO elevesEnseignant (nom,prenom,adresse,cp,pays,societe,statut,date_entree,anciennete ) 
+                VALUES (:nom,:prenom,:adresse,:cp,:pays,:societe,:statut,:date_entree,:anciennete)");
+      
+               $req->bindValue(':nom',$enseignant->getNom());
+               $req->bindValue(':prenom',$enseignant->getPrenom());
+               $req->bindValue(':adresse',$enseignant->getAdresse());
+               $req->bindValue(':cp',$enseignant->getCp());
+               $req->bindValue(':pays',$enseignant->getPays());
+               $req->bindValue(':societe',$enseignant->getSociete());
+               $req->bindValue(':statut',$enseignant->getStatut());
+               $req->bindValue(':date_entree',$enseignant-> getDateEntree());
+               $req->bindValue(':anciennete',$enseignant->getAnciennete());
+               $req->execute();
+      
+               // recuperation du personne et set de son id
+              
+               $enseignant->setId($this->connexion ->lastInsertId());
+
+               $currentId = $enseignant->getId();
+               $tabCours = $enseignant->getCoursDispenses();
+                
+                // boucle sur la variable et insertion vers la cours cours ayant pour cle etrangere la table eleveEnseignant
+               
+               foreach($tabCours as $value){
+                  $req = $this->connexion 
+                  ->prepare("INSERT INTO cours (nomCours,idPersonne) VALUES (:nomCours,:idPersonne)");
+                   $req->bindValue(':nomCours',$value);
+                  $req->bindValue(':idPersonne',$currentId);
+                  $req->execute();
+                
+               }
+              
+            
+      
+            }
+        
         }
      
 

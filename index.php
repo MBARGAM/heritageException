@@ -22,15 +22,25 @@ use Isl\Heritage\manager\EnseignantManager;
  print_q($etudiant);
  print_q($enseignant);*/
 
-   $newSetEtudiant = new EtudiantManager(1,$connexion);//instanciation du manager des etudiants
-   $newSetEnseignant = new EnseignantManager(1,$connexion);//instanciation du manager des enseignants
+   $newSetEtudiant = new EtudiantManager(2,$connexion);//instanciation du manager des etudiants avec le nbre d etudiants  a creer
+   $newSetEnseignant = new EnseignantManager(2,$connexion);//instanciation du manager des enseignants avec le nbre d enseignants  a creer
 
-   $tableEtudiants = $newSetEtudiant->createEtudiant(2);//table contenant des objets etudiants
-   $tableEnseignant= $newSetEnseignant->createEnseignant(2);//table contenant des objets enseignants
+   $tableEtudiants = $newSetEtudiant->createEtudiant(2);//table contenant des objets etudiants en appelant la methode faker en prenant en parametre le nbre de cours
+   $tableEnseignant= $newSetEnseignant->createEnseignant(2);//table contenant des objets enseignants en appelant la methode faker en prenant en parametre le nbre de cours
   
-   print_q($tableEtudiants);
+   /* boucle sur les 2 tables afin d inserer les donnees dans la base de donnee
+     */
+  print_q($tableEtudiants);
+  foreach($tableEtudiants as $value){
+     $newSetEtudiant->create($value);
+  }
 
-   print_q($tableEnseignant);
+  print_q($tableEnseignant);
+  foreach($tableEnseignant as $value){
+   $newSetEnseignant->create($value);
+ }
+
+
 
    
 ?>

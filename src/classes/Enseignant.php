@@ -8,6 +8,7 @@
     private $coursDispenses;
     private $dateEntree;
     private $anciennete;
+    private $statut = "enseignant";  
 
     public function __construct($data){
         
@@ -50,6 +51,11 @@
     public function getAnciennete(){
 
         return  $this->anciennete ;
+
+    }
+    public function getStatut(){
+
+        return $this->statut;
 
     }
 

@@ -18,7 +18,7 @@
         return $this->connexion ;
        }
 
-
+/* creation des personne par la librairie faker pour les 2 sois classes etudiant et enseignant  */
 
        protected  function createPersonne($nbre){
 
@@ -39,6 +39,8 @@
          return $tablePersonne ;
 
         }
+
+        //creations des cours , dispensés ou suivis par les eleves
 
         protected  function createCours($nbre){
 
