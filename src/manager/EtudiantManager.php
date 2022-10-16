@@ -79,6 +79,7 @@
                $tabCours = $etudiant->getCours();
                 
                // boucle sur la variable et insertion vers la cours cours ayant pour cle etrangere la table eleveEnseignant
+               
                foreach($tabCours as $value){
                   $req = $this->connexion 
                   ->prepare("INSERT INTO cours (nomCours,idPersonne) VALUES (:nomCours,:idPersonne)");

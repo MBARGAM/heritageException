@@ -2,6 +2,7 @@
    
    namespace Isl\Heritage\manager;
    use Faker\Factory;
+   use PDO;
 
    class PersonneManager{
        protected $connexion = null;
@@ -52,6 +53,36 @@
     
              return $data ;
     
+            }
+
+            protected function readOne($id){
+                
+                $req =  $this->connexion 
+                ->query("SELECT id,nom,prenom,adresse,cp,pays,societe,statut,niveau,date_entree,anciennete,nomCours,date_creation
+                 FROM elevesEnseignant 
+                 LEFT JOIN cours ON cours.idPersonne = elevesEnseignant
+                 WHERE id=".$id.";" );
+        
+                // execution de la requete avec un fetchall qui prend toute les donnees ,fetch ne prends que la 1 ere
+                $result = $req->fetchAll(PDO::FETCH_ASSOC);
+        
+                return $result;
+            }
+            
+           public function readAll(){
+          
+                $req =  $this->connexion 
+                ->query("SELECT id,nom,prenom,adresse,cp,pays,societe,statut,niveau,date_entree,anciennete,nomCours,date_creation
+                 FROM elevesEnseignant 
+                 LEFT JOIN cours ON cours.idPersonne = elevesEnseignant
+                 ;" );
+        
+        
+                // execution de la requete avec un fetchall qui prend toute les donnees ,fetch ne prends que la 1 ere
+                $result = $req->fetchAll(PDO::FETCH_ASSOC);
+        
+                return $result;
+                  
             }
     
 
